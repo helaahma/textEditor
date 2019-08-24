@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 
+// Component
+//import SelctedButtons from "./SelctedButtons";
+
 const styles = {
   bold: { fontWeight: "bold" },
   italic: { fontStyle: "italic" },
@@ -8,13 +11,34 @@ const styles = {
 };
 
 class App extends Component {
+  state = {
+    styleName: null,
+    colorBoxes: null
+  };
+  handleWeight = weight => {
+    if (weight) {
+      this.setState({ styleName: weight });
+    }
+    console.log(weight);
+  };
+
+  handleColor = color => {
+    if (color) {
+      this.setState({ colorBoxes: color });
+    }
+    console.log(color);
+  };
   render() {
     let styleNames = ["bold", "italic", "underline"];
     let colors = ["yellow", "blue", "red", "black", "purple"];
 
     let stylingBoxes = styleNames.map(style => {
       return (
-        <button style={styles[style]} key={style}>
+        <button
+          style={styles[style]}
+          key={style}
+          onClick={() => this.handleWeight(style)}
+        >
           {style}
         </button>
       );
@@ -25,6 +49,7 @@ class App extends Component {
         <button
           style={{ backgroundColor: color, height: 30, width: 30 }}
           key={color}
+          onClick={() => this.handleColor(color)}
         />
       );
     });
@@ -32,7 +57,12 @@ class App extends Component {
     return (
       <div className="App">
         <div className="my-3">{stylingBoxes}</div>
-        <textarea />
+        <textarea
+          style={{
+            fontWeight: this.state.styleName,
+            color: this.state.colorBoxes
+          }}
+        />
         <div className="my-3">{colorBoxes}</div>
       </div>
     );
