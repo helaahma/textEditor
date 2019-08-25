@@ -12,14 +12,19 @@ const styles = {
 
 class App extends Component {
   state = {
-    styleName: null,
+    styleName: [],
     colorBoxes: null
   };
-  handleWeight = weight => {
-    if (weight) {
-      this.setState({ styleName: weight });
-    }
-    console.log(weight);
+  handleWeight = style => {
+    let newArray = this.state.styleName;
+    this.state.styleName.forEach(element => {
+      style != element && newArray.push(element);
+    });
+    this.setState({
+      styleName: newArray
+    });
+
+    console.log(this.state.styleName);
   };
 
   handleColor = color => {
@@ -31,6 +36,7 @@ class App extends Component {
   render() {
     let styleNames = ["bold", "italic", "underline"];
     let colors = ["yellow", "blue", "red", "black", "purple"];
+    let styles = this.state.styleName;
 
     let stylingBoxes = styleNames.map(style => {
       return (
@@ -59,9 +65,12 @@ class App extends Component {
         <div className="my-3">{stylingBoxes}</div>
         <textarea
           style={{
-            fontWeight: this.state.styleName,
+            fontWeight: styles[styles.indexOf("bold", 0)],
+            fontStyle: styles[styles.indexOf("italic", 0)],
+            textDecorationLine: styles[styles.indexOf("underline", 0)],
             color: this.state.colorBoxes
           }}
+          style={{}}
         />
         <div className="my-3">{colorBoxes}</div>
       </div>
