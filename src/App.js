@@ -18,7 +18,7 @@ class App extends Component {
   handleWeight = style => {
     let newArray = this.state.styleName;
     this.state.styleName.forEach(element => {
-      style != element && newArray.push(element);
+      style !== element && newArray.push(style);
     });
     this.setState({
       styleName: newArray
@@ -43,6 +43,7 @@ class App extends Component {
         <button
           style={styles[style]}
           key={style}
+          className={`btn btn-${this.state[style] ? "primary" : "light"}`}
           onClick={() => this.handleWeight(style)}
         >
           {style}
@@ -65,12 +66,11 @@ class App extends Component {
         <div className="my-3">{stylingBoxes}</div>
         <textarea
           style={{
-            fontWeight: styles[styles.indexOf("bold", 0)],
-            fontStyle: styles[styles.indexOf("italic", 0)],
-            textDecorationLine: styles[styles.indexOf("underline", 0)],
+            fontWeight: styles[styles.indexOf("bold", 0)] || "",
+            fontStyle: styles[styles.indexOf("italic", 0)] || "",
+            textDecorationLine: styles[styles.indexOf("underline", 0)] || "",
             color: this.state.colorBoxes
           }}
-          style={{}}
         />
         <div className="my-3">{colorBoxes}</div>
       </div>
