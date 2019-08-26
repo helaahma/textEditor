@@ -17,9 +17,13 @@ class App extends Component {
   };
   handleWeight = style => {
     let newArray = this.state.styleName;
-    this.state.styleName.forEach(element => {
-      style !== element && newArray.push(style);
-    });
+    const foundStyle = this.state.styleName.find(element => style === element);
+    if (!foundStyle) {
+      newArray.push(style);
+    } else {
+      newArray = newArray.filter(element => element !== style);
+    }
+
     this.setState({
       styleName: newArray
     });
@@ -36,7 +40,7 @@ class App extends Component {
   render() {
     let styleNames = ["bold", "italic", "underline"];
     let colors = ["yellow", "blue", "red", "black", "purple"];
-    let styles = this.state.styleName;
+    let newStyles = this.state.styleName;
 
     let stylingBoxes = styleNames.map(style => {
       return (
@@ -66,9 +70,9 @@ class App extends Component {
         <div className="my-3">{stylingBoxes}</div>
         <textarea
           style={{
-            fontWeight: styles[styles.indexOf("bold", 0)] || "",
-            fontStyle: styles[styles.indexOf("italic", 0)] || "",
-            textDecorationLine: styles[styles.indexOf("underline", 0)] || "",
+            fontWeight: newStyles[newStyles.indexOf("bold", 0)],
+            fontStyle: newStyles[newStyles.indexOf("italic", 0)],
+            textDecorationLine: newStyles[newStyles.indexOf("underline", 0)],
             color: this.state.colorBoxes
           }}
         />
